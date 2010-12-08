@@ -1,5 +1,3 @@
-var aaaaa;
-
 (function($){
 
 	var methods = {
@@ -491,8 +489,3 @@ var aaaaa;
   };
 
 })(jQuery)
-
-$(function(){
-	$('#student-ref-select').ddSelect();
-	$('#instructor-ref-select').ddSelect();
-})

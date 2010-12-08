@@ -483,7 +483,7 @@
     } else if ( typeof method === 'object' || ! method ) {
       return methods.init.apply( this, arguments );
     } else {
-      $.error( 'Method ' +  method + ' does not exist on jQuery.ddSelect' );
+      $.error( 'Specified method ' +  method + ' does not exist on jQuery.ddSelect' );
     }
 
   };

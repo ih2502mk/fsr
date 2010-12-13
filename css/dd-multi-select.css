@@ -1,5 +1,5 @@
 .dd-select-wrapper{
-	
+	display: block;
 }
 
 .dd-select-wrapper .lc-wrapper{
@@ -230,4 +230,11 @@
 	width: 100px;
 	height: 30px;
 	background-color: #ffff00;
+}
+
+div.null-block{
+	clear: both;
+	display: block;
+	height: 0px;
+	line-height: 0px;
 }

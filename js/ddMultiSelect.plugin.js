@@ -526,8 +526,3 @@
   };
 
 })(jQuery)
-
-$(function(){
-	$('#student-ref-select').ddSelect({onItemMark:function(event, id){ alert(id); }});
-	$('#instructor-ref-select').ddSelect();
-})

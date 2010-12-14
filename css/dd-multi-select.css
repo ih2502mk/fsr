@@ -63,6 +63,11 @@
 	display: block;
 }
 
+.dd-select-wrapper ul > li.fsr-marked{
+	background-color: #0066ff;
+	color: #fff;
+}
+
 .dd-select-wrapper ul > li > div{
 	border-bottom: none;
 	color:#696969;

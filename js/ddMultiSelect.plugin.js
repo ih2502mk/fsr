@@ -1,3 +1,8 @@
+//TODO: add "fsr" prefix to all classes
+//TODO: add "fsr" namespace to all event types
+//TODO: get rid of terms like "uid"
+//TODO: review optgroup identification method
+
 (function($){
 
 	var methods = {
@@ -6,7 +11,9 @@
 			var settings = {
 //				container:		'',
 				isSingle:			false,
-				nested:				true
+				nested:				true,
+				clickMarkable: true,
+				onItemMark:		null
 			}
 
 			return this.each(function(){
@@ -173,6 +180,12 @@
 								item.addClass('duplicate');
 							}
 							item.addClass('item-uid-'+$elem.val());
+
+							if(settings.clickMarkable){
+								item.bind('click', function(e){
+									$this.ddSelect('markItem', e, $(this).data('uid'));
+								});
+							}
 							
 							return item;
 						}
@@ -448,6 +461,30 @@
 			$('.dd-select-lv-search', widget).removeClass('throbbing');
 		},
 
+		markItem: function(event, id){
+			var widget = this.data('ddSelect').ddSelectWidget;
+
+			if(!widget){
+				$.error( 'jQuery.ddSelect widget was not found on this element' );
+				return;
+			}
+			if(this.data('ddSelect').settings.isSingle){
+				$('option', this).each(function(){
+					$(this).data('selectItemObj').selsctItemLi.removeClass('fsr-marked');
+				});
+			}
+
+			var $item = $('option[value="'+id+'"]', this).data('selectItemObj').selsctItemLi,
+					markCallback = this.data('ddSelect').settings.onItemMark;
+
+			if(!$item.hasClass('fsr-marked')){
+				if(markCallback && (typeof markCallback == "function")){
+					markCallback.apply($item, [event, id]);
+				}
+			}
+			$item.toggleClass('fsr-marked');
+		},
+
 		option: function(key, value){
 			var widget = this.data('ddSelect').ddSelectWidget;
 
@@ -489,3 +526,8 @@
   };
 
 })(jQuery)
+
+$(function(){
+	$('#student-ref-select').ddSelect({onItemMark:function(event, id){ alert(id); }});
+	$('#instructor-ref-select').ddSelect();
+})

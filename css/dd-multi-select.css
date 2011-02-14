@@ -125,22 +125,6 @@
 	min-height: 30px;
 }
 
-.dd-select-wrapper .clr-btn{
-	cursor: pointer;
-	-moz-border-radius:3px 3px 3px 3px;
-	-webkit-border-radius:3px 3px 3px 3px;
-	border-radius:3px 3px 3px 3px;
-	border:1px solid #999999;
-	background: url(images/gradient-btn-bg.png) left top repeat-x #fff;
-	color:#474747;
-	cursor:pointer;
-	height:28px;
-	font-size:11px;
-}
-.dd-select-wrapper .clr-btn:hover{
-	background: url(images/gradient-btn-bg.png) left bottom repeat-x #fff;
-}
-
 .dd-select-wrapper span.expand-btn{
 	background:url(images/expand-collapse-btn.png) left bottom no-repeat transparent;
 	margin:5px 5px 0 5px;

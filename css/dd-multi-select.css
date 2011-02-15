@@ -3,20 +3,20 @@
 }
 
 .dd-select-wrapper .lc-wrapper{
-	width: 300px;
+	width: 200px;
 	float: left;
 	position: relative;
 }
 
 .dd-select-wrapper .rc-wrapper{
 	float: left;
-	margin-left: -300px;
+	margin-left: -200px;
 	width: 100%;
 }
 
 .dd-select-wrapper .rc-container{
-	margin-left: 350px;
-	width: 300px;
+	margin-left: 240px;
+	width: 200px;
 }
 
 .dd-select-wrapper ul{
@@ -111,8 +111,8 @@
 	border: 1px solid #ccc;
 	background-color: #fff;
 	background-image: none;
-	height: 1.7em;
-	width: 280px;
+	height: 20px;
+	width: 180px;
 	list-style-image: none;
 }
 
@@ -193,7 +193,7 @@
 }
 
 .dd-select-wrapper .dd-select-lv-search{
-	width: 271px;
+	width: 200px;
 	padding-right: 25px;
 	float: left;
 }

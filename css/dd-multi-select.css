@@ -1,3 +1,5 @@
+/*TODO: remove > sign from selectors for ie compatibility*/
+
 .dd-select-wrapper{
 	display: block;
 }
@@ -5,17 +7,15 @@
 .dd-select-wrapper .lc-wrapper{
 	width: 200px;
 	float: left;
-	position: relative;
 }
 
 .dd-select-wrapper .rc-wrapper{
 	float: left;
-	margin-left: -200px;
-	width: 100%;
+	width: 200px;
 }
 
 .dd-select-wrapper .rc-container{
-	margin-left: 240px;
+	margin-left: 40px;
 	width: 200px;
 }
 
@@ -54,21 +54,21 @@
 	display:none;
 }
 
-.dd-select-wrapper ul > li.expanded{
+.dd-select-wrapper ul li.expanded{
 	background-color: transparent;
 	background-image: none;
 }
 
-.dd-select-wrapper ul > li.expanded > ul{
+.dd-select-wrapper ul li.expanded > ul{
 	display: block;
 }
 
-.dd-select-wrapper ul > li.fsr-marked{
+.dd-select-wrapper ul li.fsr-marked{
 	background-color: #0066ff;
 	color: #fff;
 }
 
-.dd-select-wrapper ul > li > div{
+.dd-select-wrapper ul li > div{
 	border-bottom: none;
 	color:#696969;
 	background-color: #efefef;

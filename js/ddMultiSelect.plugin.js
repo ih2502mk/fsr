@@ -161,40 +161,39 @@
 						};
 					};
 
+					var getSelectItemText = function($elem){
+						return $elem.text();
+					}
+
+					var createSelsctItemLi = function($elem){
+						if(!$elem.hasClass('duplicate')){
+							if( $('option[value='+$elem.val()+']', $this).length > 1 ){
+								$('option[value='+$elem.val()+']', $this).addClass('duplicate');
+							}
+						}
+
+						var item = $('<li />').html($elem.text());
+						item.data('uid', $elem.val());
+						item.data('formSelectOption', $elem);
+						if($elem.hasClass('duplicate')){
+							item.addClass('duplicate');
+						}
+						item.addClass('item-uid-'+$elem.val());
+
+						if(settings.clickMarkable){
+							item.bind('click', function(e){
+								$this.ddSelect('markItem', e, $(this).data('uid'));
+								$(this).toggleClass('fsr-marked');
+							});
+						}
+
+						return item;
+					}
+
 					var SelectItem = function($elem){
-						var getSelectItemText = function(){
-							return $elem.text();
-						}
-
-						var createSelsctItemLi = function(){
-							if(!$elem.hasClass('duplicate')){
-								if( $('option[value='+$elem.val()+']', $this).length > 1 ){
-									$('option[value='+$elem.val()+']', $this).addClass('duplicate');
-								}
-							}
-
-							var item = $('<li />').html($elem.text());
-							item.data('uid', $elem.val());
-							item.data('formSelectOption', $elem);
-							if($elem.hasClass('duplicate')){
-								item.addClass('duplicate');
-							}
-							item.addClass('item-uid-'+$elem.val());
-
-							if(settings.clickMarkable){
-								item.bind('click', function(e){
-									$this.ddSelect('markItem', e, $(this).data('uid'));
-								});
-							}
-							
-							return item;
-						}
-
-						return {
-							selectItemUid		:$elem.val(),
-							selsctItemText	:getSelectItemText(),
-							selsctItemLi		:createSelsctItemLi()
-						}
+						this.selectItemUid = $elem.val();
+						this.selsctItemText = getSelectItemText($elem);
+						this.selsctItemLi = createSelsctItemLi($elem);
 					}
 
 					$('optgroup', $this).each(function(i){
@@ -209,7 +208,7 @@
 							$(this).addClass('not-groupped');
 						}
 
-						$(this).data('selectItemObj', SelectItem($(this)));
+						$(this).data('selectItemObj', new SelectItem($(this)));
 					});
 
 					if((typeof settings.container == 'string') && (typeof $(settings.container).get(0) != "undefined")){
@@ -337,7 +336,7 @@
 			var widget = this.data('ddSelect').ddSelectWidget;
 
 			if(!widget){
-				$.error( 'jQuery.ddSelect widget was not found on this element' );
+//				$.error( 'jQuery.ddSelect widget was not found on this element' );
 				return;
 			}
 
@@ -398,7 +397,7 @@
 			var widget = this.data('ddSelect').ddSelectWidget;
 
 			if(!widget){
-				$.error( 'jQuery.ddSelect widget was not found on this element' );
+//				$.error( 'jQuery.ddSelect widget was not found on this element' );
 				return;
 			}
 
@@ -421,7 +420,7 @@
 			var widget = this.data('ddSelect').ddSelectWidget;
 
 			if(!widget){
-				$.error( 'jQuery.ddSelect widget was not found on this element' );
+//				$.error( 'jQuery.ddSelect widget was not found on this element' );
 				return;
 			}
 
@@ -438,7 +437,7 @@
 		filterSelect: function(keyword){
 			var widget = this.data('ddSelect').ddSelectWidget;
 			if(!widget){
-				$.error( 'jQuery.ddSelect widget was not found on this element' );
+//				$.error( 'jQuery.ddSelect widget was not found on this element' );
 				return;
 			}
 
@@ -465,7 +464,7 @@
 			var widget = this.data('ddSelect').ddSelectWidget;
 
 			if(!widget){
-				$.error( 'jQuery.ddSelect widget was not found on this element' );
+//				$.error( 'jQuery.ddSelect widget was not found on this element' );
 				return;
 			}
 			if(this.data('ddSelect').settings.isSingle){
@@ -474,15 +473,15 @@
 				});
 			}
 
-			var $item = $('option[value="'+id+'"]', this).data('selectItemObj').selsctItemLi,
-					markCallback = this.data('ddSelect').settings.onItemMark;
-
-			if(!$item.hasClass('fsr-marked')){
-				if(markCallback && (typeof markCallback == "function")){
-					markCallback.apply($item, [event, id]);
-				}
-			}
-			$item.toggleClass('fsr-marked');
+//			var $item = $('option[value="'+id+'"]', this).data('selectItemObj').selsctItemLi;
+//					markCallback = this.data('ddSelect').settings.onItemMark;
+//
+//			if(!$item.hasClass('fsr-marked')){
+//				if(markCallback && (typeof markCallback == "function")){
+//					markCallback.apply($item, [event, id]);
+//				}
+//			}
+//			$item.toggleClass('fsr-marked');
 		},
 
 		option: function(key, value){

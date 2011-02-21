@@ -473,15 +473,14 @@
 				});
 			}
 
-//			var $item = $('option[value="'+id+'"]', this).data('selectItemObj').selsctItemLi;
-//					markCallback = this.data('ddSelect').settings.onItemMark;
-//
-//			if(!$item.hasClass('fsr-marked')){
-//				if(markCallback && (typeof markCallback == "function")){
-//					markCallback.apply($item, [event, id]);
-//				}
-//			}
-//			$item.toggleClass('fsr-marked');
+			var $item = $('option[value="'+id+'"]', this).data('selectItemObj').selsctItemLi,
+					markCallback = this.data('ddSelect').settings.onItemMark;
+
+			if(!$item.hasClass('fsr-marked')){
+				if(markCallback && (typeof markCallback == "function")){
+					markCallback.apply($item, [event, id]);
+				}
+			}
 		},
 
 		option: function(key, value){

@@ -19,7 +19,7 @@
 			return this.each(function(){
 
 				if(!$(this).is('select')){
-					$.error( 'jQuery.ddSelect can be applied only to form select elements' );
+//					$.error( 'jQuery.ddSelect can be applied only to form select elements' );
 					return;
 				}
 

@@ -201,11 +201,16 @@
 .dd-select-wrapper .clear-search{
 	display: block;
 	width: 25px;
-	height: 16px;
+	height: 22px;
 	float: left;
 	margin-left: -25px;
 	position: relative;
 	cursor: pointer;
+	background: url('images/lens.png') center center no-repeat transparent;
+}
+
+.dd-select-wrapper .clear-search.keyword-present{
+	background: url('images/close-btn.png') center center no-repeat transparent;
 }
 
 .dd-select-lv-search.throbbing{

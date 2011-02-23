@@ -45,63 +45,12 @@
 					$('.lc-wrapper .lc-container .dd-toolbox', ddSelectWidget).
 						append('<div class="search-panel"><input type="text" class="dd-select-lv-search"><span class="clear-search"></span></div>');
 
-					$('.dd-select-lv-search', ddSelectWidget).data('searcher', {
-						remind: function(keyword) {
-							$this.ddSelect('filterSelect', keyword);
-							delete this.timeoutID;
-						},
-
-						setup: function(keyword) {
-							this.cancel();
-							var self = this;
-							this.timeoutID = window.setTimeout(function() {self.remind(keyword);}, 400);
-						},
-
-						cancel: function() {
-							if(typeof this.timeoutID == "number") {
-								window.clearTimeout(this.timeoutID);
-								delete this.timeoutID;
-							}
-						}
-					});
-
-					$('.dd-select-lv-search', ddSelectWidget).bind('keyup', function(e){
-						switch (e.keyCode) {
-							case 16: // shift
-							case 17: // ctrl
-							case 18: // alt
-							case 20: // caps lock
-							case 33: // page up
-							case 34: // page down
-							case 35: // end
-							case 36: // home
-							case 37: // left arrow
-							case 38: // up arrow
-							case 39: // right arrow
-							case 40: // down arrow
-							case 9:  // tab
-							case 13: // enter
-							case 27: // esc
-							return true;
-
-						default: // all other keys
-							$(this).data('searcher').setup($(this).val());
-							if($(this).val().length){
-								$(this).siblings('span.clear-search').addClass('keyword-present');
-							} else {
-								$(this).siblings('span.clear-search').removeClass('keyword-present');
-							}
-							return true;
-						}
-
-					});
-
 					$('.clear-search', ddSelectWidget).bind('click', function(){
 						if($(this).hasClass('keyword-present')){
 							$(this).siblings('.dd-select-lv-search').val('');
-							$(this).siblings('.dd-select-lv-search').trigger('keyup');
+							$(this).siblings('.dd-select-lv-search').trigger('keydown');
 						}
-					});
+					});			
 
 					if($this.children('optgroup').get(0)){
 
@@ -226,6 +175,7 @@
 					$this.ddSelect('makeDraggable');
 					$this.ddSelect('makeExpandable');
 					$this.ddSelect('indicateOptions');
+					$this.ddSelect('makeSearchable');
 
 					$this.addClass('ddSelect-processed');
 				}
@@ -412,6 +362,30 @@
 
 		},
 
+		makeSearchable: function (){
+			var widget = this.data('ddSelect').ddSelectWidget;
+
+			if(!widget){
+//				$.error( 'jQuery.ddSelect widget was not found on this element' );
+				return;
+			}
+
+			$('input.dd-select-lv-search', widget)
+				.domsearch(
+					$('ul.src-list'),
+					{
+						onkeydown:function(input){
+							if($(input).val() != ''){
+								$(input).siblings('.clear-search').addClass('keyword-present')
+							}
+							else {
+								$(input).siblings('.clear-search').removeClass('keyword-present')
+							}
+						}
+					}
+				);
+		},
+
 		clear: function(){
 			$('option', this).removeAttr('selected');
 		},
@@ -432,32 +406,6 @@
 				$('span.flat-btn', widget).addClass('activated');
 			}
 
-		},
-
-		filterSelect: function(keyword){
-			var widget = this.data('ddSelect').ddSelectWidget;
-			if(!widget){
-//				$.error( 'jQuery.ddSelect widget was not found on this element' );
-				return;
-			}
-
-			this.ddSelect('option', 'nested', false);
-			this.ddSelect('populate');
-			this.ddSelect('makeDraggable');
-
-			$('.dd-select-lv-search', widget).addClass('throbbing');
-
-			var re = new RegExp(keyword, "i");
-
-			$('option', this).each(function(){
-				if(!($(this).text().match(re))){
-					$(this).data('selectItemObj').selsctItemLi.addClass('search-hidden');
-				} else {
-					$(this).data('selectItemObj').selsctItemLi.removeClass('search-hidden');
-				}
-			})
-
-			$('.dd-select-lv-search', widget).removeClass('throbbing');
 		},
 
 		markItem: function(event, id){

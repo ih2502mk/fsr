@@ -48,7 +48,7 @@
 					$('.clear-search', ddSelectWidget).bind('click', function(){
 						if($(this).hasClass('keyword-present')){
 							$(this).siblings('.dd-select-lv-search').val('');
-							$(this).siblings('.dd-select-lv-search').trigger('keydown');
+							$(this).siblings('.dd-select-lv-search').trigger('keyup');
 						}
 					});			
 
@@ -372,7 +372,7 @@
 
 			$('input.dd-select-lv-search', widget)
 				.domsearch(
-					$('ul.src-list'),
+					$('ul.src-list', widget),
 					{
 						onkeydown:function(input){
 							if($(input).val() != ''){

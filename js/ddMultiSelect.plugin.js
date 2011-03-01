@@ -323,6 +323,7 @@
 					}
 					ui.helper.remove();
 					$select.ddSelect('populate');
+					$('input.dd-select-lv-search', widget).domsearch('originalOrder');
 				}
 			}).disableSelection();
 			$(".src-list", widget).droppable({
@@ -339,6 +340,7 @@
 					}
 					ui.helper.remove();
 					$select.ddSelect('populate');
+					$('input.dd-select-lv-search', widget).domsearch('originalOrder');
 				}
 			}).disableSelection();
 		},

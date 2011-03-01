@@ -25,11 +25,13 @@ $(function($) {
 				return 'li';
 			case 'DIV':
 				return 'div';
+			case 'select':
+				return 'option';
 		}
 		return undefined;
 	}
 
-	function search(query, searchIn, options) {
+	function search(query, searchIn, options){
 		$($.grep($(searchIn).find(options.unit), function(row) {
 			var text;
 			switch(options.criteria.constructor) {
@@ -58,51 +60,85 @@ $(function($) {
 		.hide();
 	}
 
-	function init(element, searchIn, options) {
-		var target = $(searchIn),
-		defaults = {
-			unit: undefined,
-			criteria: false,
-			minimumScore: 0.5
-		},
-		opts = $.extend(defaults, options);
-		opts.unit = opts.unit || guessUnit(target[0].tagName);
-
-		var originalOrder = target.find(opts.unit);
-
-		var delayer = new Delayer(400);
-
-		$(element).keyup(function(event) {
-			if (event.keyCode == 9) return true; // TAB
-			var field = $(this);
-			delayer.setup(
-				function() {
-//          if (field.val() == '') {
-//            originalOrder.show().appendTo(target);
-//          } else {
-//						search(field.val(), target[0], opts);
-//          }
-					search(field.val(), target[0], opts);
-					if (typeof opts.onkeydown == 'function') opts.onkeydown(field);
-				}
-
-				);
-			return true;
-		});
+	var options = {
+		unit: undefined,
+		criteria: false,
+		minimumScore: 0.5
 	}
+
+	var methods = {
+		init: function(searchIn, options) {
+			var settings = {
+				unit: undefined,
+				criteria: false,
+				minimumScore: 0.5
+			};
+
+			return this.each(function (){
+				var $this = $(this),
+						domSearchEnabled = $this.data('domsearch.enabled');
+
+
+				if(!domSearchEnabled || options ){
+					$.extend(settings, options);
+
+					settings.target = $(searchIn);
+					settings.unit = settings.unit || guessUnit(settings.target[0].tagName);
+
+					var delayer = new Delayer(400);
+
+					$this.keyup(function(event) {
+						if (event.keyCode == 9) return true; // TAB
+						delayer.setup(
+							function() {
+			          if ($this.val() == '') {
+			            $this.data('originalOrder').show().appendTo(settings.target);
+			          } else {
+									search($this.val(), settings.target[0], settings);
+			          }
+								if (typeof settings.onkeydown == 'function') settings.onkeydown($this);
+							}
+
+							);
+						return true;
+					});
+
+					$this.data('originalOrder', settings.target.find(settings.unit));
+					$this.data('settings', settings);
+					$this.data('domsearch.enabled', true);
+				}
+			});
+		},
+
+		search: function(query, searchIn, options){
+			search(query, searchIn, options);
+		},
+
+		originalOrder: function(){
+			var $this = $(this);
+			var settings = $this.data('settings');
+			$this.data('originalOrder', settings.target.find(settings.unit));
+		}
+	}
+
+	$.fn.domsearch = function( method ) {
+
+    // Method calling logic
+    if ( methods[method] ) {
+      return methods[ method ].apply( this, Array.prototype.slice.call( arguments, 1 ));
+    } else if ( typeof method === 'object' || typeof method === 'string' || !method ) {
+      return methods.init.apply( this, arguments );
+    } else {
+      $.error( 'Method ' +  method + ' does not exist' );
+    }
+
+  };
+
+	$.domsearch = function(element, searchIn, options) {
+		$(element).domsearch(searchIn, options);
+	};
 
 	$.fn.sort = function() {
 		return this.pushStack([].sort.apply(this, arguments), []);
 	};
-	$.domsearch = function(element, searchIn, options) {
-		init(element, searchIn, options);
-	};
-	$.fn.domsearch = function(query, options) {
-		if (!$(this).data('domsearch.enabled')) {
-			$(this).data('domsearch.enabled', true);
-			return this.each(function() {
-				new $.domsearch(this, query, options);
-			});
-		}
-	};
-});
+})

@@ -60,12 +60,6 @@ $(function($) {
 		.hide();
 	}
 
-	var options = {
-		unit: undefined,
-		criteria: false,
-		minimumScore: 0.5
-	}
-
 	var methods = {
 		init: function(searchIn, options) {
 			var settings = {

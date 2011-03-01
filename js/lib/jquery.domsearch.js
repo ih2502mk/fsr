@@ -76,13 +76,13 @@ $(function($) {
 			if (event.keyCode == 9) return true; // TAB
 			var field = $(this);
 			delayer.setup(
-
 				function() {
 //          if (field.val() == '') {
 //            originalOrder.show().appendTo(target);
 //          } else {
-						search(field.val(), target[0], opts);
+//						search(field.val(), target[0], opts);
 //          }
+					search(field.val(), target[0], opts);
 					if (typeof opts.onkeydown == 'function') opts.onkeydown(field);
 				}
 

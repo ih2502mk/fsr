@@ -104,8 +104,12 @@ $(function($) {
 			});
 		},
 
-		search: function(query, searchIn, options){
-			search(query, searchIn, options);
+		search: function(query){
+			if(this.data('domsearch.enabled')){
+				var options = this.data('settings');
+				var searchIn = options.target;
+				search(query, searchIn, options);
+			}
 		},
 
 		originalOrder: function(){

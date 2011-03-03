@@ -106,16 +106,16 @@ $(function($) {
 
 		search: function(query){
 			if(this.data('domsearch.enabled')){
-				var options = this.data('settings');
-				var searchIn = options.target;
-				search(query, searchIn, options);
+				var settings = this.data('settings');
+				search(query, settings.target, settings);
 			}
 		},
 
 		originalOrder: function(){
-			var $this = $(this);
-			var settings = $this.data('settings');
-			$this.data('originalOrder', settings.target.find(settings.unit));
+			if(this.data('domsearch.enabled')){
+				var settings = this.data('settings');
+				this.data('originalOrder', settings.target.find(settings.unit));
+			}
 		}
 	}
 
